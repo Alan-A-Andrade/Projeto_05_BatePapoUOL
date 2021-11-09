@@ -1,0 +1,170 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+    width: 375px;
+    height: 667px;
+
+    background: #F3F3F3;
+
+    font-family:'Roboto';
+    size: 14px;
+    line-height: 16.41px;
+}
+
+header{
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0px;
+
+    padding: 0px 22px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+strong{
+font-weight: bolder;
+}
+
+.logo{
+    height: 53px;
+}
+
+header ion-icon{
+    font-size: 45px;
+}
+
+footer{
+    width: 100%;
+    height: 80px;
+
+    position: fixed;
+    bottom: 0px;
+
+    padding: 15px 17px;
+    
+    background: #FFFFFF;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+footer ion-icon{
+    font-size: 30px;
+}
+
+.caixa-texto-usuario{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+border: none;
+
+font-size: 18px;
+font-weight: 400;
+line-height: 25px;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color:black;
+    opacity: 1; /* Firefox */
+    font-style: italic;
+    font-weight: 400;
+    line-height: 21.09px;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: black;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 21.09px;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: black;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 21.09px;
+  }
+
+.encaminhado{
+    color: gray;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 25px;
+
+}
+
+
+section{
+    padding: 80px 0px;
+    margin-top: 26px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+
+ul{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+
+
+.caixa-mensagem{
+    min-height: 40px;
+    width: 100%;
+
+    border-radius: 2px;
+
+    display: flex;
+    align-items: center;
+}
+
+.caixa-mensagem h1{
+    padding: 12px 8px;
+}
+
+.porta-usuario{
+    background: #DCDCDC;
+}
+
+.publica{
+    background: #FFFFFF;
+}
+
+.privada{
+    background: #FFDEDE;
+
+}
+
+.hidden{
+    display: none;
+}
+
+
+.teste{
+background-color: grey;
+display: flex;
+flex-direction: column;
+position: fixed;
+top: 50%;
+right: 0px;
+}
+
+.teste button{
+font-size: 8px;
+}

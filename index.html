@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="id_visual.css" />
+    <title>Bate Papo UOL</title>
+    <link rel="icon" href="" type=image/x-icon />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <img class="logo" src="./assets/BatePapoUol_logo-01.jpg" alt="">
+        <ion-icon name="people"></ion-icon>
+    </header>
+
+    <section>
+        <ul>
+            <div class="caixa-mensagem porta-usuario">
+                <h1>(09:22:48) João entra na sala...</h1>
+            </div>
+
+            <div class="caixa-mensagem publica">
+                <h1>(09:22:38) Maria para João: Oi João :)</h1>
+            </div>
+
+            <li class="caixa-mensagem privada">
+                <h1>(09:22:48) João reservadamente para Maria: Oi gatinha quer tc?</h1>
+            </li>
+        </ul>
+    </section>
+
+    <footer>
+        <div class="caixa-texto-usuario">
+            <input type="text" placeholder="Escreva aqui...">
+            <div class="encaminhado">enviado para usuario</div>
+        </div>
+        <ion-icon name="paper-plane-outline"></ion-icon>
+
+    </footer>
+
+
+    <div class="teste">
+        <button onclick="setUser()">add usuario</button>
+        <button onclick="removeUser()">remover usuario</button>
+        <button onclick="sendmsg()">enviar mensagem</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
