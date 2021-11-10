@@ -1,9 +1,13 @@
-*{
-  box-sizing: border-box;
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 body{
-    width: 375px;
+    width: 100%;
     height: 667px;
 
     background: #F3F3F3;
@@ -12,6 +16,160 @@ body{
     size: 14px;
     line-height: 16.41px;
 }
+
+.tela-login{
+    width: 100%;
+    height: 100%;
+
+
+    padding: 72px 57px;
+    background-color: #FFFFFF;
+    
+    position: fixed;
+    top: 0px;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.tela-login img{
+    height: 92px;
+    margin-bottom: 94px;
+    font-size: 18px;
+}
+
+.tela-login input{
+    width: 260px;
+    height: 54px;
+
+    color: #AEAEAE;
+    font-weight: 400;
+    line-height: 25px;
+
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+
+    margin: 15px;
+  
+    font-style: normal;
+    text-align: center;
+   
+}
+
+.tela-login input ::placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #AEAEAE;
+    opacity: 1; /* Firefox */
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+  }
+  
+
+.tela-login button{
+    width: 109px;
+    height: 45px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #E7E7E7;
+
+    font-size: 18px;
+    color: #696969;
+    
+}
+
+.menu{
+width: 100%;
+height: 100%;
+
+position: fixed;
+top: 0px;
+z-index: 20;
+
+display: flex;
+flex-wrap: wrap;
+}
+
+.opcoes{
+    width: 260px;
+    height: 100%;
+    
+    background: #FFFFFF;
+
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 25;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.opcoes nav{
+    width: 100%;
+}
+
+.icon-name{
+    width: 100%;
+    height: 30px;
+
+    padding: 0px 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+.icon-name h1{
+    width: 100%;
+
+    font-size: 16px;
+
+}
+
+
+.icon-name ion-icon{
+    padding: 5px;
+
+    font-size: 25px;
+}
+
+ion-icon[name="checkmark"]{
+color: #28BB25;
+
+font-size: 35px;
+
+}
+
+.texto-menu{
+text-align: center;
+font-size: 16px;
+font-weight: 700;
+
+padding: 32px;
+
+}
+
+
+ul, li{
+    list-style-type: none;
+    display: flex;
+}
+
+.fundo{
+    width: 100%;
+    height: 100%;
+
+    
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
 
 header{
     width: 100%;
@@ -68,7 +226,7 @@ footer ion-icon{
     flex-direction: column;
 }
 
-input{
+footer input{
 border: none;
 
 font-size: 18px;
@@ -76,27 +234,14 @@ font-weight: 400;
 line-height: 25px;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+footer input ::placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color:black;
     opacity: 1; /* Firefox */
     font-style: italic;
     font-weight: 400;
     line-height: 21.09px;
   }
-  
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: black;
-    font-style: italic;
-    font-weight: 400;
-    line-height: 21.09px;
-  }
-  
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: black;
-    font-style: italic;
-    font-weight: 400;
-    line-height: 21.09px;
-  }
+
 
 .encaminhado{
     color: gray;
@@ -138,15 +283,15 @@ ul{
     padding: 12px 8px;
 }
 
-.porta-usuario{
+.status{
     background: #DCDCDC;
 }
 
-.publica{
+.message{
     background: #FFFFFF;
 }
 
-.privada{
+.private_message{
     background: #FFDEDE;
 
 }

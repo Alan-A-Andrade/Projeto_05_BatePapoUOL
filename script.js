@@ -1,90 +1,65 @@
-let userOnline = []
-let conteudo = document.querySelector("ul")
+let menuContatos = document.querySelector(".menu")
 
-for (let i = 0; i < 10; i++) {
-    userOnline.push("NoUser")
+let info;
+let data;
+const conteudoChat = document.querySelector("section ul")
+
+
+setInterval(buscarDados, 3000);
+
+function buscarDados() {
+    info = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages");
+    info.then(esperarResposta);
 }
 
-function sendmsg() {
-    let sender = prompt("QuemEnvia");
-    let receiver = prompt("quemRecebe / vazio=Todos");
-    sender = userOnline[sender - 1];
-    if (receiver == "") {
-
-        receiver = "Todos"
-
-    }
-    else {
-        receiver = userOnline[receiver - 1]
-    }
-
-    let msgConteudo = prompt("Publica(p) ou Privada (dm)")
-    let msgTexto = prompt("Escreva abaixo")
-
-    if (msgConteudo == "p") {
-
-
-
-        msgPublica(sender, receiver, msgTexto);
-    }
-
-    else if (msgConteudo == "dm") {
-        msgPrivada(sender, receiver, msgTexto);
-    }
-
-    else {
-        msgPublica(sender, receiver, msgTexto);
-    }
+function esperarResposta(resposta) {
+    data = resposta.data
+    BuscarMensagem();
 }
 
 
-function setUser() {
-    let numbUser = userOnline.indexOf("NoUser");
-    let user = prompt("qual nome do usuario?");
-    userOnline[numbUser] = user;
+function abrirMenu() {
+    menuContatos.classList.toggle("hidden")
+
 }
 
-function removeUser() {
-    let user = prompt("qual usuario remover");
-    let numbUser = userOnline.indexOf(user);
-    userOnline[numbUser] = "NoUser"
-}
+function BuscarMensagem() {
+    conteudoChat.innerHTML = ""
 
-function msgPrivada(sender, receiver, msgTexto) {
-    let caixaMsg = `<li class="caixa-mensagem privada">
-    <h1>${time()} <strong> ${sender}</strong> para <strong>${receiver}</strong>: ${msgTexto}</h1>
-    </li>`
-    conteudo.innerHTML += caixaMsg;
-    let elemento = conteudo.querySelector("ul li:last-child");
-    elemento.scrollIntoView();
-}
+    for (let i = 0; i < data.length; i++) {
 
-function msgPublica(sender, receiver, msgTexto) {
-    if (receiver === null) {
-        receiver = "Todos"
+        let from = data[i].from;
+        let to = data[i].to;
+        let text = data[i].text;
+        let time = data[i].time;
+        let type = data[i].type;
+
+        conteudoChat.innerHTML +=
+            `<li class="caixa-mensagem ${type}" data-identifier="message">
+                <h1>${time} <strong> ${from}</strong> para <strong>${to}</strong>: ${text}</h1>
+            </li>`
+
+        if (i == data.length - 1) {
+            let elemento = conteudoChat.querySelector("ul li:last-child");
+            elemento.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        }
     }
-    let caixaMsg = `<li class="caixa-mensagem publica">
-    <h1>${time()} <strong>${sender}</strong> para <strong>${receiver}</strong>: ${msgTexto}</h1>
-    </li>`
-    conteudo.innerHTML += caixaMsg;
-    let elemento = conteudo.querySelector("ul li:last-child");
-    elemento.scrollIntoView();
 
 }
 
 
-function time() {
-    let data = new Date();
-    let hora = data.getHours();
-    let minuto = data.getMinutes()
-    let segundo = data.getSeconds();
-    if (minuto < 10) {
-        minuto = `0${minuto}`
-    }
-    if (segundo < 10) {
-        segundo = `0${segundo}`
-    }
 
-    let time = `(${hora}:${minuto}:${segundo})`
-    return time;
+function preencherChat() {
+
+
+
+
 }
+
+//funcções para teste
+
+function removerHidden(elemento) {
+    elemento = elemento.closest("div")
+    elemento.classList.toggle("hidden")
+}
+

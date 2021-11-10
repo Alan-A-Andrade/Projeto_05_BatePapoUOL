@@ -18,24 +18,72 @@
 
 <body>
 
+    <div class="tela-login">
+        <img src="./assets/BatePapoUol_logo-01.jpg" alt="">
+        <input type="text" placeholder="Digite seu nome">
+        <button onclick="removerHidden(this)">Entrar</button>
+    </div>
+
+    <div class="menu hidden">
+        <div onclick="abrirMenu()" class="fundo"></div>
+        <div class="opcoes">
+
+            <nav>
+                <h1 class="texto-menu">Escolha um contato para enviar mensagem:</h1>
+                <ul class="user-list">
+                    <li>
+                        <div class="icon-name">
+                            <ion-icon name="people"></ion-icon>
+                            <h1>Todos</h1>
+                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon-name">
+                            <ion-icon name="person-circle"></ion-icon>
+                            <h1>User1</h1>
+                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon-name">
+                            <ion-icon name="person-circle"></ion-icon>
+                            <h1>User2</h1>
+                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav>
+                <h1 class="texto-menu">Escolha a visibilidade:</h1>
+                <ul class="visibilidade">
+                    <li>
+                        <div class="icon-name">
+                            <ion-icon name="person-circle"></ion-icon>
+                            <h1>Público</h1>
+                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon-name">
+                            <ion-icon name="person-circle"></ion-icon>
+                            <h1>Privado</h1>
+                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
     <header>
         <img class="logo" src="./assets/BatePapoUol_logo-01.jpg" alt="">
-        <ion-icon name="people"></ion-icon>
+        <ion-icon onclick="abrirMenu()" name="people"></ion-icon>
     </header>
 
     <section>
         <ul>
-            <div class="caixa-mensagem porta-usuario">
-                <h1>(09:22:48) João entra na sala...</h1>
-            </div>
-
-            <div class="caixa-mensagem publica">
-                <h1>(09:22:38) Maria para João: Oi João :)</h1>
-            </div>
-
-            <li class="caixa-mensagem privada">
-                <h1>(09:22:48) João reservadamente para Maria: Oi gatinha quer tc?</h1>
-            </li>
         </ul>
     </section>
 
@@ -50,11 +98,10 @@
 
 
     <div class="teste">
-        <button onclick="setUser()">add usuario</button>
-        <button onclick="removeUser()">remover usuario</button>
-        <button onclick="sendmsg()">enviar mensagem</button>
+        <button onclick="BuscarMensagem()">buscar mensagem</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
