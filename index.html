@@ -31,21 +31,21 @@
             <nav>
                 <h1 class="texto-menu">Escolha um contato para enviar mensagem:</h1>
                 <ul class="user-list">
-                    <li>
+                    <li class="selecionado" onclick="escolherContato(this)">
                         <div class="icon-name">
                             <ion-icon name="people"></ion-icon>
                             <h1>Todos</h1>
-                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                            <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
                     </li>
-                    <li>
+                    <li onclick="escolherContato(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>User1</h1>
                             <ion-icon class="hidden" name="checkmark"></ion-icon>
                         </div>
                     </li>
-                    <li>
+                    <li onclick="escolherContato(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>User2</h1>
@@ -58,14 +58,14 @@
             <nav>
                 <h1 class="texto-menu">Escolha a visibilidade:</h1>
                 <ul class="visibilidade">
-                    <li>
+                    <li class="selecionado" onclick="escolherPrivacidade(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Público</h1>
-                            <ion-icon class="hidden" name="checkmark"></ion-icon>
+                            <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
                     </li>
-                    <li>
+                    <li onclick="escolherPrivacidade(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Privado</h1>
