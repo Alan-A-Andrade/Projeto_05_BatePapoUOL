@@ -2,7 +2,18 @@ let menuContatos = document.querySelector(".menu")
 
 let info;
 let data;
-const conteudoChat = document.querySelector("section ul")
+const conteudoChat = document.querySelector("section ul");
+let MenuLogin = document.querySelector(".tela-login")
+let userNameInput = document.querySelector(".tela-login input");
+let userLogin;
+let login;
+
+function pedidoLogin() {
+
+    userLogin = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: userNameInput.value });
+    userLogin.then(esperarLogin);
+
+}
 
 
 setInterval(buscarDados, 3000);
@@ -10,6 +21,17 @@ setInterval(buscarDados, 3000);
 function buscarDados() {
     info = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages");
     info.then(esperarResposta);
+}
+
+function esperarLogin(resposta) {
+    login = resposta.data
+    if (login == "OK") {
+        MenuLogin.classList.add("hidden")
+    }
+    else {
+        alert("Usuario ja logado")
+    }
+
 }
 
 function esperarResposta(resposta) {
