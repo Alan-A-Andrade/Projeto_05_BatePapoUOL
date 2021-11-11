@@ -38,20 +38,6 @@
                             <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
                     </li>
-                    <li onclick="escolherContato(this)">
-                        <div class="icon-name">
-                            <ion-icon name="person-circle"></ion-icon>
-                            <h1>User1</h1>
-                            <ion-icon class="hidden" name="checkmark"></ion-icon>
-                        </div>
-                    </li>
-                    <li onclick="escolherContato(this)">
-                        <div class="icon-name">
-                            <ion-icon name="person-circle"></ion-icon>
-                            <h1>User2</h1>
-                            <ion-icon class="hidden" name="checkmark"></ion-icon>
-                        </div>
-                    </li>
                 </ul>
             </nav>
 
@@ -92,14 +78,10 @@
             <input type="text" placeholder="Escreva aqui...">
             <div class="encaminhado">enviado para usuario</div>
         </div>
-        <ion-icon name="paper-plane-outline"></ion-icon>
+        <ion-icon onclick="sendMsg(this)" name="paper-plane-outline"></ion-icon>
 
     </footer>
 
-
-    <div class="teste">
-        <button onclick="BuscarMensagem()">buscar mensagem</button>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>

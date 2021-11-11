@@ -22,7 +22,7 @@ body{
     height: 100%;
 
 
-    padding: 72px 57px;
+    padding: 72px 10px;
     background-color: #FFFFFF;
     
     position: fixed;
@@ -33,6 +33,7 @@ body{
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+
 }
 
 .tela-login img{
@@ -219,9 +220,11 @@ footer{
 
 footer ion-icon{
     font-size: 30px;
+    padding: 5px;
 }
 
 .caixa-texto-usuario{
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -280,7 +283,11 @@ ul{
 }
 
 .caixa-mensagem h1{
+    width: 100%;
+
     padding: 12px 8px;
+
+    overflow-wrap: break-word;
 }
 
 .status{
