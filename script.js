@@ -1,8 +1,8 @@
 let menuContatos = document.querySelector(".menu")
-let info;
-let data;
+let respostaMsgChat;
+let dataMsgChat;
 let dataUserOnline;
-let infoUserOnline;
+let respostaUserOnline;
 const conteudoChat = document.querySelector("section ul");
 let MenuLogin = document.querySelector(".tela-login")
 let userNameInput = document.querySelector(".tela-login input");
@@ -13,9 +13,32 @@ let userMsgType = "message"
 let userMsgTo = "Todos";
 const userSettings = document.querySelector(".encaminhado");
 const userOnlineList = document.querySelector(".user-list");
+let msgToSelected = document.querySelector(".visibilidade .selecionado");
+const buttonLogIn = document.getElementById("logInButton");
+const msgFooter = document.querySelector("footer");
+const buttonToSend = document.querySelector("#send-button")
 
 
 userSettings.innerHTML = `Enviado para ${userMsgTo}`;
+
+buttonLogIn.addEventListener("click", pedidoLogin);
+MenuLogin.addEventListener("keypress", enterToLogIn);
+msgFooter.addEventListener("keypress", enterToSend);
+
+function enterToLogIn() {
+
+    if (event.key === 'Enter') {
+        pedidoLogin();
+    }
+}
+
+function enterToSend() {
+
+    if (event.key === 'Enter') {
+        sendMsg(buttonToSend);
+    }
+}
+
 
 function pedidoLogin() {
 
@@ -24,6 +47,7 @@ function pedidoLogin() {
     userLogin.then(esperarLogin);
     userLogin.catch(anotherUser);
     userName = userNameInput.value;
+
 }
 
 function atualizarChat() {
@@ -31,12 +55,12 @@ function atualizarChat() {
     setInterval(buscarDados, 3000);
 
     function buscarDados() {
-        info = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages");
-        info.then(esperarResposta);
+        respostaMsgChat = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages");
+        respostaMsgChat.then(esperarResposta);
     }
 
     function esperarResposta(resposta) {
-        data = resposta.data
+        dataMsgChat = resposta.data
         BuscarMensagem();
     }
 }
@@ -46,13 +70,14 @@ function atualizarUserOnline() {
     setInterval(buscarUserOnline, 10000);
 
     function buscarUserOnline() {
-        infoUserOnline = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
-        infoUserOnline.then(esperarLista);
+        respostaUserOnline = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
+        respostaUserOnline.then(esperarLista);
     }
 
     function esperarLista(resposta) {
         dataUserOnline = resposta.data
         BuscarParticipantes();
+        escolherPrivacidade(msgToSelected)
     }
 }
 
@@ -103,11 +128,11 @@ function abrirMenu() {
 
 function BuscarParticipantes() {
     userOnlineList.innerHTML =
-        `<li class="selecionado" onclick="escolherContato(this)">
+        `<li id="Todos" class="" onclick="escolherContato(this)">
     <div class="icon-name">
         <ion-icon name="people"></ion-icon>
         <h1>Todos</h1>
-        <ion-icon class="" name="checkmark"></ion-icon>
+        <ion-icon class="hidden" name="checkmark"></ion-icon>
     </div>
     </li>`
 
@@ -115,7 +140,7 @@ function BuscarParticipantes() {
 
         let name = dataUserOnline[j].name;
         userOnlineList.innerHTML +=
-            `<li onclick="escolherContato(this)">
+            `<li data-identifier="participant" id="${name}" onclick="escolherContato(this)">
         <div class="icon-name">
             <ion-icon name="person-circle"></ion-icon>
             <h1>${name}</h1>
@@ -124,57 +149,80 @@ function BuscarParticipantes() {
     </li>`
 
 
+        if (j == dataUserOnline.length - 1) {
+            let elemento = document.getElementById(userMsgTo)
+            elemento.classList.add("selecionado");
+            check(elemento);
+        }
+
+
     }
-
-
 }
 
 function BuscarMensagem() {
     conteudoChat.innerHTML = ""
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < dataMsgChat.length; i++) {
 
-        let from = data[i].from;
-        let to = data[i].to;
-        let text = data[i].text;
-        let time = data[i].time;
-        let type = data[i].type;
+        let from = dataMsgChat[i].from;
+        let to = dataMsgChat[i].to;
+        let text = dataMsgChat[i].text;
+        let time = dataMsgChat[i].time;
+        let type = dataMsgChat[i].type;
 
-        if (type == "status") {
-            conteudoChat.innerHTML += `<li class="caixa-mensagem ${type}" data-identifier="message">
+        if (type === "status") {
+            conteudoChat.innerHTML += `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
                 <h1>${time} <strong> ${from}</strong> ${text}</h1>
         </li>`
         }
 
-        else if (type == "private_message" && from == "Todos") {
-            `<li class="caixa-mensagem ${type}" data-identifier="message">
-            <h1>${time} <strong> ${from}</strong> para <strong>${to}</strong>: ${text}</h1>
-    </li>`
-        }
-
-        else if (type == "private_message" && from != userName) {
-            continue;
-        }
-
         else {
-            conteudoChat.innerHTML +=
-                `<li class="caixa-mensagem ${type}" data-identifier="message">
+
+            if (type === "private_message") {
+
+                if (to === userName || to === "'Todos'" || from === userName) {
+                    conteudoChat.innerHTML += `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
+                    <h1>${time} <strong> ${from}</strong> reservadamente para <strong>${to}</strong>: ${text}</h1>
+                    </li>`
+                }
+
+                else {
+                    continue;
+                }
+
+
+            }
+
+            else {
+
+                conteudoChat.innerHTML +=
+                    `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
                 <h1>${time} <strong> ${from}</strong> para <strong>${to}</strong>: ${text}</h1>
-        </li>`
+                </li>`
+            }
         }
 
-        if (i == data.length - 1) {
+
+        if (i == dataMsgChat.length - 1) {
             let elemento = conteudoChat.querySelector("ul li:last-child");
             elemento.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         }
     }
+
 }
 
 function escolherContato(item) {
     let menuanterior = item.closest("ul");
     let itemanterior = menuanterior.querySelector(".selecionado");
 
-    if (item === itemanterior) {
+    if (itemanterior == undefined) {
+        item = document.getElementById("Todos");
+        item.classList.add("selecionado");
+        check(item);
+        userMsgPrivate = false;
+    }
+
+    else if (item === itemanterior) {
         return;
 
     } else {
@@ -193,6 +241,8 @@ function escolherContato(item) {
     else {
         userSettings.innerHTML = `Enviado para ${userMsgTo}`;
     }
+
+    msgToSelected = document.querySelector(".visibilidade .selecionado");
 }
 
 function escolherPrivacidade(item) {
@@ -208,15 +258,16 @@ function escolherPrivacidade(item) {
         check(item);
         userMsgPrivate = !userMsgPrivate;
         privado();
-    }
 
-    if (userMsgPrivate == true) {
 
-        userSettings.innerHTML = `Enviado para ${userMsgTo} (reservadamente)`;
-    }
+        if (userMsgPrivate == true) {
 
-    else {
-        userSettings.innerHTML = `Enviado para ${userMsgTo}`;
+            userSettings.innerHTML = `Enviado para ${userMsgTo} (reservadamente)`;
+        }
+
+        else {
+            userSettings.innerHTML = `Enviado para ${userMsgTo}`;
+        }
     }
 }
 
@@ -254,6 +305,9 @@ function privado() {
     if (userMsgPrivate == true) {
         userMsgType = "private_message";
     }
+    else {
+        userMsgType = "message";
+    }
 }
 
 function pedidoMsg(msg) {
@@ -268,3 +322,4 @@ function limparMsg(resposta) {
     let caixaDeTexto = document.querySelector("footer input")
     caixaDeTexto.value = "";
 }
+

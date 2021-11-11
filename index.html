@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="id_visual.css" />
     <title>Bate Papo UOL</title>
-    <link rel="icon" href="" type=image/x-icon />
+    <link rel="icon" href="assets/favIcon" type=image/x-icon />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,11 +17,10 @@
 </head>
 
 <body>
-
     <div class="tela-login">
         <img src="./assets/BatePapoUol_logo-01.jpg" alt="">
-        <input type="text" placeholder="Digite seu nome">
-        <button onclick="pedidoLogin(this)">Entrar</button>
+        <input data-identifier="enter-name" type="text" placeholder="Digite seu nome">
+        <button id="logInButton" data-identifier="start">Entrar</button>
     </div>
 
     <div class="menu hidden">
@@ -44,14 +43,14 @@
             <nav>
                 <h1 class="texto-menu">Escolha a visibilidade:</h1>
                 <ul class="visibilidade">
-                    <li class="selecionado" onclick="escolherPrivacidade(this)">
+                    <li data-identifier="visibility" class="selecionado" onclick="escolherPrivacidade(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Público</h1>
                             <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
                     </li>
-                    <li onclick="escolherPrivacidade(this)">
+                    <li data-identifier="visibility" onclick="escolherPrivacidade(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Privado</h1>
@@ -78,7 +77,8 @@
             <input type="text" placeholder="Escreva aqui...">
             <div class="encaminhado">enviado para usuario</div>
         </div>
-        <ion-icon onclick="sendMsg(this)" name="paper-plane-outline"></ion-icon>
+        <ion-icon id="send-button" onclick="sendMsg(this)" name="paper-plane-outline" data-identifier="send-message">
+        </ion-icon>
 
     </footer>
 
