@@ -32,6 +32,11 @@ function askToLogIn() {
 
     promiseLogIn = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: userNameInput.value });
 
+    document.querySelector(".loading-gif").classList.toggle("hidden")
+    document.querySelector(".logIn-Screen h1").classList.toggle("hidden")
+    document.querySelector(".logIn-Screen button").classList.toggle("hidden")
+    document.querySelector(".logIn-Screen input").classList.toggle("hidden")
+
     promiseLogIn.then(getAnswerToLogIn);
     promiseLogIn.catch(failedLogIn);
 
@@ -60,6 +65,7 @@ function askToLogIn() {
 
     function failedLogIn() {
         alert("Já existe úsuario conectado com mesmo nome");
+        reload()
     }
 }
 
@@ -293,8 +299,15 @@ function sendMsg() {
         userMsgType = "private_message"
     }
 
-    let msg = { from: userName, to: previusRecipient.querySelector("h1").innerText, text: userMsgText, type: userMsgType }
-    promiseMsg(msg);
+    if (userMsgText === null || userMsgText === undefined || userMsgText === "") {
+        return;
+    }
+
+    else {
+
+        let msg = { from: userName, to: previusRecipient.querySelector("h1").innerText, text: userMsgText, type: userMsgType }
+        promiseMsg(msg);
+    }
 }
 
 function promiseMsg(msg) {
