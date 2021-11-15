@@ -1,325 +1,317 @@
-let menuContatos = document.querySelector(".menu")
-let respostaMsgChat;
-let dataMsgChat;
-let dataUserOnline;
-let respostaUserOnline;
-const conteudoChat = document.querySelector("section ul");
-let MenuLogin = document.querySelector(".tela-login")
-let userNameInput = document.querySelector(".tela-login input");
-let login;
-let userName = ""
-let userMsgPrivate = false;
-let userMsgType = "message"
-let userMsgTo = "Todos";
-const userSettings = document.querySelector(".encaminhado");
-const userOnlineList = document.querySelector(".user-list");
-let msgToSelected = document.querySelector(".visibilidade .selecionado");
-const buttonLogIn = document.getElementById("logInButton");
-const msgFooter = document.querySelector("footer");
-const buttonToSend = document.querySelector("#send-button")
+let dataChatLast = {};
+const dataChatUrl = "https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages";
+const dataUsersOnlineUrl = "https://mock-api.driven.com.br/api/v4/uol/participants";
+const msgURL = "https://mock-api.driven.com.br/api/v4/uol/messages";
+const logInURL = "https://mock-api.driven.com.br/api/v4/uol/status";
+const chatContainerList = document.querySelector(".chat-msg");
+let userName = "";
+let previusRecipient = document.querySelector(".user-list .selected");
+let privateModeOn = false
+const firstUserList = document.querySelector(".user-list").innerHTML;
 
-
-userSettings.innerHTML = `Enviado para ${userMsgTo}`;
-
-buttonLogIn.addEventListener("click", pedidoLogin);
-MenuLogin.addEventListener("keypress", enterToLogIn);
-msgFooter.addEventListener("keypress", enterToSend);
+document.querySelector(".logIn-Screen").addEventListener("keypress", enterToLogIn);
+document.querySelector("footer").addEventListener("keypress", enterToSend);
 
 function enterToLogIn() {
 
     if (event.key === 'Enter') {
-        pedidoLogin();
+        askToLogIn();
     }
 }
 
 function enterToSend() {
 
     if (event.key === 'Enter') {
-        sendMsg(buttonToSend);
+        sendMsg();
     }
 }
 
+function askToLogIn() {
 
-function pedidoLogin() {
+    let userNameInput = document.querySelector(".logIn-Screen input")
 
-    let userLogin;
-    userLogin = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: userNameInput.value });
-    userLogin.then(esperarLogin);
-    userLogin.catch(anotherUser);
-    userName = userNameInput.value;
+    promiseLogIn = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: userNameInput.value });
 
-}
-
-function atualizarChat() {
-
-    setInterval(buscarDados, 3000);
-
-    function buscarDados() {
-        respostaMsgChat = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v4/uol/messages");
-        respostaMsgChat.then(esperarResposta);
-    }
-
-    function esperarResposta(resposta) {
-        dataMsgChat = resposta.data
-        BuscarMensagem();
-    }
-}
-
-function atualizarUserOnline() {
-
-    setInterval(buscarUserOnline, 10000);
-
-    function buscarUserOnline() {
-        respostaUserOnline = axios.get("https://mock-api.driven.com.br/api/v4/uol/participants");
-        respostaUserOnline.then(esperarLista);
-    }
-
-    function esperarLista(resposta) {
-        dataUserOnline = resposta.data
-        BuscarParticipantes();
-        escolherPrivacidade(msgToSelected)
-    }
-}
+    promiseLogIn.then(getAnswerToLogIn);
+    promiseLogIn.catch(failedLogIn);
 
 
-function esperarLogin(resposta) {
-    login = resposta.data
-    if (login == "OK") {
-        MenuLogin.classList.add("hidden")
-        atualizarChat()
-        atualizarUserOnline();
-        ManterConexao();
-    }
-    else {
-        alert("Usuario ja logado")
-    }
 
-}
+    function getAnswerToLogIn(answer) {
 
-function ManterConexao() {
+        if (answer.data == "OK") {
+            userName = userNameInput.value;
+            document.querySelector(".logIn-Screen").classList.add("hidden")
 
-    setInterval(pedidoLoginContinuo, 5000)
+            getDataChat(dataChatUrl);
+            getDataUsersOnline(dataUsersOnlineUrl);
+            setInterval(getDataChat, 3000, dataChatUrl);
+            setInterval(getDataUsersOnline, 10000, dataUsersOnlineUrl);
+            setInterval(KeepLoggedIn, 5000)
 
-}
-
-function pedidoLoginContinuo() {
-
-    let userLogin;
-    userLogin = axios.post("https://mock-api.driven.com.br/api/v4/uol/status", { name: userNameInput.value });
-    userLogin.then("");
-    userLogin.catch(reload);
-
-}
-
-function anotherUser() {
-    alert("Nome de usuário já em uso")
-}
-
-
-function reload() {
-    window.location.reload()
-}
-
-
-function abrirMenu() {
-    menuContatos.classList.toggle("hidden")
-
-}
-
-function BuscarParticipantes() {
-    userOnlineList.innerHTML =
-        `<li id="Todos" class="" onclick="escolherContato(this)">
-    <div class="icon-name">
-        <ion-icon name="people"></ion-icon>
-        <h1>Todos</h1>
-        <ion-icon class="hidden" name="checkmark"></ion-icon>
-    </div>
-    </li>`
-
-    for (let j = 0; j < dataUserOnline.length; j++) {
-
-        let name = dataUserOnline[j].name;
-        userOnlineList.innerHTML +=
-            `<li data-identifier="participant" id="${name}" onclick="escolherContato(this)">
-        <div class="icon-name">
-            <ion-icon name="person-circle"></ion-icon>
-            <h1>${name}</h1>
-            <ion-icon class="hidden" name="checkmark"></ion-icon>
-        </div>
-    </li>`
-
-
-        if (j == dataUserOnline.length - 1) {
-            let elemento = document.getElementById(userMsgTo)
-            elemento.classList.add("selecionado");
-            check(elemento);
-        }
-
-
-    }
-}
-
-function BuscarMensagem() {
-    conteudoChat.innerHTML = ""
-
-    for (let i = 0; i < dataMsgChat.length; i++) {
-
-        let from = dataMsgChat[i].from;
-        let to = dataMsgChat[i].to;
-        let text = dataMsgChat[i].text;
-        let time = dataMsgChat[i].time;
-        let type = dataMsgChat[i].type;
-
-        if (type === "status") {
-            conteudoChat.innerHTML += `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
-                <h1>${time} <strong> ${from}</strong> ${text}</h1>
-        </li>`
+            let chatSettings = document.querySelector(".chat-options")
+            chatSettings.classList.toggle("hidden")
         }
 
         else {
+            failedLogIn()
+        }
+    }
 
-            if (type === "private_message") {
+    function failedLogIn() {
+        alert("Já existe úsuario conectado com mesmo nome");
+    }
+}
 
-                if (to === userName || to === "'Todos'" || from === userName) {
-                    conteudoChat.innerHTML += `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
-                    <h1>${time} <strong> ${from}</strong> reservadamente para <strong>${to}</strong>: ${text}</h1>
-                    </li>`
-                }
+function KeepLoggedIn() {
+    let constantRequest;
+    constantRequest = axios.post(logInURL, { name: userName });
+    constantRequest.then("");
+    constantRequest.catch(reload);
+}
 
-                else {
-                    continue;
-                }
+function getDataChat(url) {
 
+    getData(url);
 
+    function getData(url) {
+
+        let askPromise
+        askPromise = axios.get(`${url}`);
+        askPromise.then(getAnswer);
+        askPromise.catch(failedAnswer);
+    }
+
+    function getAnswer(answer) {
+        refreshChat(answer.data)
+    }
+
+    function failedAnswer(answer) {
+        console.log(answer);
+    }
+}
+
+function refreshChat(dataMsgChat) {
+    if (dataChatLast.time === dataMsgChat[dataMsgChat.length - 1].time) {
+        return;
+    }
+
+    else {
+        chatContainerList.innerHTML = ""
+
+        for (let i = 0; i < dataMsgChat.length; i++) {
+            let from = dataMsgChat[i].from;
+            let to = dataMsgChat[i].to;
+            let text = dataMsgChat[i].text;
+            let time = dataMsgChat[i].time;
+            let type = dataMsgChat[i].type;
+
+            if (type === "status") {
+                chatContainerList.innerHTML += `<li data-identifier="message" class="${type}" dataMsgChat-identifier="message"><p><time-text>${time}</time-text> <user-text>${from}</user-text> ${text}</p></li>                                                `
             }
 
             else {
 
-                conteudoChat.innerHTML +=
-                    `<li data-identifier="message" class="caixa-mensagem ${type}" dataMsgChat-identifier="message">
-                <h1>${time} <strong> ${from}</strong> para <strong>${to}</strong>: ${text}</h1>
-                </li>`
+                if (type === "private_message") {
+
+                    if (to === userName || to === "'Todos'" || from === userName) {
+                        chatContainerList.innerHTML += `<li data-identifier="message" class="${type}" dataMsgChat-identifier="message"><p><time-text>${time}</time-text> <user-text>${from}</user-text> reservadamente para <user-text>${to}</user-text>: ${text}</p></li>`
+                    }
+
+                    else {
+                        continue;
+                    }
+                }
+
+                else {
+                    chatContainerList.innerHTML +=
+                        `<li data-identifier="message" class="${type}" dataMsgChat-identifier="message"><p><time-text>${time}</time-text> <user-text>${from}</user-text> para <user-text>${to}</user-text>: ${text}</p></li>`
+                }
+            }
+
+            if (i == dataMsgChat.length - 1) {
+                let elemento = chatContainerList.querySelector("li:last-child");
+                elemento.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                dataChatLast = dataMsgChat[i];
             }
         }
-
-
-        if (i == dataMsgChat.length - 1) {
-            let elemento = conteudoChat.querySelector("ul li:last-child");
-            elemento.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-        }
     }
-
 }
 
-function escolherContato(item) {
-    let menuanterior = item.closest("ul");
-    let itemanterior = menuanterior.querySelector(".selecionado");
+function getDataUsersOnline(url) {
 
-    if (itemanterior == undefined) {
-        item = document.getElementById("Todos");
-        item.classList.add("selecionado");
-        check(item);
-        userMsgPrivate = false;
+    getData(url);
+
+    function getData(url) {
+        let askPromise
+        askPromise = axios.get(`${url}`);
+        askPromise.then(getAnswer);
+        askPromise.catch(failedAnswer);
     }
 
-    else if (item === itemanterior) {
-        return;
-
-    } else {
-        itemanterior.classList.remove("selecionado");
-        check(itemanterior);
-        item.classList.add("selecionado");
-        check(item);
-        userMsgTo = item.querySelector("h1").innerHTML
+    function getAnswer(answer) {
+        refreshUserOnline(answer.data)
     }
 
-    if (userMsgPrivate == true) {
+    function failedAnswer(answer) {
+        console.log(answer);
+    }
+}
 
-        userSettings.innerHTML = `Enviado para ${userMsgTo} (reservadamente)`;
+function refreshUserOnline(dataUserOnline) {
+    let arrayUsers = dataUserOnline.map(a => a.name)
+    let selectedIsOn = arrayUsers.some(previusRecipientOnline)
+    if (!selectedIsOn && previusRecipient.querySelector("h1").innerHTML !== "Todos") {
+        let listUserOnline = document.querySelector(".user-list")
+        listUserOnline.innerHTML = firstUserList
+        listUserOnline.innerHTML += `<li data-identifier="participant" class="disconnected" onclick="selectUserTo(this)"><div class="icon-name"><ion-icon name="people"></ion-icon><h1>${previusRecipient.querySelector("h1").innerHTML}</h1></div><ion-icon class="hidden" name="checkmark"></ion-icon></li>`;
+
+        dataUserOnline.forEach(userOnlineList);
+
+        let innerCheck = document.querySelector(".user-list .selected");
+        let newCheck = document.querySelector(".disconnected");
+        innerCheck.classList.remove("selected")
+        innerCheck.querySelector(`ion-icon[name="checkmark"]`).classList.add("hidden");
+        newCheck.classList.add("selected")
+        newCheck.querySelector(`ion-icon[name="checkmark"]`).classList.remove("hidden");
+        sendModeSet("(desconectado)", "disconnected")
+
+    }
+
+    else if (previusRecipient.querySelector("h1").innerHTML === "Todos") {
+        let listUserOnline = document.querySelector(".user-list")
+
+        listUserOnline.innerHTML = firstUserList
+        dataUserOnline.forEach(userOnlineList);
+        sendModeSet("", "blank")
     }
 
     else {
-        userSettings.innerHTML = `Enviado para ${userMsgTo}`;
-    }
 
-    msgToSelected = document.querySelector(".visibilidade .selecionado");
+        let listUserOnline = document.querySelector(".user-list")
+        listUserOnline.innerHTML = firstUserList
+        listUserOnline.innerHTML += `<li data-identifier="participant" class="selected" onclick="selectUserTo(this)"><div class="icon-name"><ion-icon name="people"></ion-icon><h1>${previusRecipient.querySelector("h1").innerHTML}</h1></div><ion-icon class="" name="checkmark"></ion-icon></li>`;
+
+        dataUserOnline.forEach(userOnlineList);
+
+        let innerCheck = document.querySelector(".user-list .selected");
+        innerCheck.classList.remove("selected")
+        innerCheck.querySelector(`ion-icon[name="checkmark"]`).classList.add("hidden");
+        sendModeSet("", "blank")
+    }
 }
 
-function escolherPrivacidade(item) {
-    let menuanterior = item.closest("ul");
-    let itemanterior = menuanterior.querySelector(".selecionado");
-    if (item === itemanterior) {
+function userOnlineList(data) {
+
+    let listUserOnline = document.querySelector(".user-list")
+
+    if (previusRecipient.querySelector("h1").innerHTML === data.name) {
         return;
+    }
 
-    } else {
-        itemanterior.classList.remove("selecionado");
-        check(itemanterior);
-        item.classList.add("selecionado");
-        check(item);
-        userMsgPrivate = !userMsgPrivate;
-        privado();
+    listUserOnline.innerHTML += `<li data-identifier="participant" class="" onclick="selectUserTo(this)"><div class="icon-name"><ion-icon name="people"></ion-icon><h1>${data.name}</h1></div><ion-icon class="hidden" name="checkmark"></ion-icon></li>`
+}
 
-
-        if (userMsgPrivate == true) {
-
-            userSettings.innerHTML = `Enviado para ${userMsgTo} (reservadamente)`;
-        }
-
-        else {
-            userSettings.innerHTML = `Enviado para ${userMsgTo}`;
-        }
+function previusRecipientOnline(names) {
+    if (names == previusRecipient.querySelector("h1").innerHTML) {
+        return names
     }
 }
 
-function check(elemento) {
-    let checkativo;
-    checkativo = elemento.querySelector("ion-icon[name='checkmark']");
-    checkativo.classList.toggle("hidden");
-}
 
-function removerHidden(elemento) {
-    elemento = elemento.closest("div")
-    elemento.classList.toggle("hidden")
-}
+function selectUserTo(SelectedRecipient) {
 
-function sendMsg(elemento) {
-    let menuanterior = elemento.closest("footer");
-    let caixaDeTexto = menuanterior.querySelector("input")
+    previusRecipient = document.querySelector(".user-list .selected");
 
-    userMsgTexto = caixaDeTexto.value;
-
-    let msg =
-    {
-        from: userName,
-        to: userMsgTo,
-        text: userMsgTexto,
-        type: userMsgType
-
+    if (previusRecipient.querySelector("h1").innerHTML === SelectedRecipient.innerHTML) {
+        return;
     }
-    pedidoMsg(msg)
 
+    else {
+        previusRecipient.classList.toggle("selected")
+        previusRecipient.querySelector(`ion-icon[name="checkmark"]`).classList.add("hidden")
+        SelectedRecipient.classList.toggle("selected")
+        SelectedRecipient.querySelector(`ion-icon[name="checkmark"]`).classList.toggle("hidden")
+        previusRecipient = SelectedRecipient;
+    }
+
+    sendModeSet("", "blank")
 }
 
-function privado() {
+function selectVisibilityMode(element) {
 
-    if (userMsgPrivate == true) {
-        userMsgType = "private_message";
+    let previusMode = document.querySelector(".privacity .selected");
+
+    if (previusMode === element) {
+        return;
+    }
+
+    else {
+        privateModeOn = !privateModeOn
+        previusMode.classList.remove("selected")
+        previusMode.querySelector(`ion-icon[name="checkmark"]`).classList.add("hidden")
+        element.classList.add("selected")
+        element.querySelector(`ion-icon[name="checkmark"]`).classList.remove("hidden")
+        sendModeSet("", "blank")
+    }
+}
+
+
+function toggleChatOptions() {
+
+    let chatSettings = document.querySelector(".chat-options")
+    chatSettings.classList.toggle("chat-options-show")
+
+    let backgroundTransparency = document.querySelector(".background-options")
+    backgroundTransparency.classList.toggle("background-options-show")
+}
+
+function sendModeSet(string, style) {
+
+    let text = document.querySelector("footer > div > div");
+
+    if (!privateModeOn) {
+        text.innerHTML = `Enviado para <${style}>${previusRecipient.querySelector("h1").innerText}</${style}> ${string}`
+    }
+
+
+    else {
+        text.innerHTML = `Enviado reservadamente para <${style}>${previusRecipient.querySelector("h1").innerText}</${style}> ${string}`
+    }
+}
+
+
+function sendMsg() {
+
+    let userMsgText = document.querySelector("footer input").value;
+    let userMsgType;
+
+    if (!privateModeOn) {
+        userMsgType = "message"
     }
     else {
-        userMsgType = "message";
+        userMsgType = "private_message"
     }
+
+    let msg = { from: userName, to: previusRecipient.querySelector("h1").innerText, text: userMsgText, type: userMsgType }
+    promiseMsg(msg);
 }
 
-function pedidoMsg(msg) {
-    let promessa;
-    promessa = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", msg);
-    promessa.then(limparMsg);
-    promessa.catch(reload);
+function promiseMsg(msg) {
 
+    let promiseUserMsg = axios.post(msgURL, msg);
+
+    promiseUserMsg.then(clearUserMsg);
+    promiseUserMsg.catch(reload);
 }
 
-function limparMsg(resposta) {
-    let caixaDeTexto = document.querySelector("footer input")
-    caixaDeTexto.value = "";
+function clearUserMsg() {
+
+    let SendUserMsgBox = document.querySelector("footer input")
+    getDataChat(dataChatUrl);
+    SendUserMsgBox.value = "";
 }
 
+function reload() {
+    window.location.reload();
+}

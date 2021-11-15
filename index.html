@@ -17,71 +17,73 @@
 </head>
 
 <body>
-    <div class="tela-login">
-        <img src="./assets/BatePapoUol_logo-01.jpg" alt="">
-        <input data-identifier="enter-name" type="text" placeholder="Digite seu nome">
-        <button id="logInButton" data-identifier="start">Entrar</button>
+
+
+    <div class="logIn-Screen">
+        <img src="./assets/BatePapoUol_logo-01.jpg" alt="Logo">
+        <input data-identifier="enter-name" placeholder="Digite seu nome" type="text">
+        <button data-identifier="start" onclick="askToLogIn()">Entrar</button>
+
     </div>
 
-    <div class="menu hidden">
-        <div onclick="abrirMenu()" class="fundo"></div>
-        <div class="opcoes">
+    <div class="chat-Screen">
+        <header>
+            <img src="./assets/BatePapoUol_logo-01.jpg" alt="">
+            <ion-icon onclick="toggleChatOptions()" name="people"></ion-icon>
+        </header>
 
+        <div class="container">
+            <ul class="chat-msg"></ul>
+        </div>
+
+        <footer>
+            <div class="User-SendBox">
+                <input type="text" placeholder="Escreva aqui...">
+                <div>Enviado para Todos</div>
+            </div>
+            <ion-icon onclick="sendMsg()" name="paper-plane-outline" data-identifier="send-message">
+            </ion-icon>
+        </footer>
+    </div>
+
+
+    <div class="chat-options hidden">
+        <div onclick="toggleChatOptions()" class="background-options"></div>
+        <div class="options-menu">
+            <h1 class="option-users-online">Escolha um contato para enviar mensagem:</h1>
             <nav>
-                <h1 class="texto-menu">Escolha um contato para enviar mensagem:</h1>
                 <ul class="user-list">
-                    <li class="selecionado" onclick="escolherContato(this)">
+                    <li data-identifier="participant" class="selected" onclick="selectUserTo(this)">
                         <div class="icon-name">
                             <ion-icon name="people"></ion-icon>
                             <h1>Todos</h1>
-                            <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
+                        <ion-icon name="checkmark"></ion-icon>
                     </li>
                 </ul>
             </nav>
-
+            <h1 class="option-private">Escolha a visibilidade:</h1>
             <nav>
-                <h1 class="texto-menu">Escolha a visibilidade:</h1>
-                <ul class="visibilidade">
-                    <li data-identifier="visibility" class="selecionado" onclick="escolherPrivacidade(this)">
+                <ul class="privacity">
+                    <li data-identifier="visibility" class="selected" onclick="selectVisibilityMode(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Público</h1>
-                            <ion-icon class="" name="checkmark"></ion-icon>
                         </div>
+                        <ion-icon class="" name="checkmark"></ion-icon>
                     </li>
-                    <li data-identifier="visibility" onclick="escolherPrivacidade(this)">
+                    <li data-identifier="visibility" onclick="selectVisibilityMode(this)">
                         <div class="icon-name">
                             <ion-icon name="person-circle"></ion-icon>
                             <h1>Privado</h1>
-                            <ion-icon class="hidden" name="checkmark"></ion-icon>
                         </div>
+                        <ion-icon class="hidden" name="checkmark"></ion-icon>
+
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
-
-    <header>
-        <img class="logo" src="./assets/BatePapoUol_logo-01.jpg" alt="">
-        <ion-icon onclick="abrirMenu()" name="people"></ion-icon>
-    </header>
-
-    <section>
-        <ul>
-        </ul>
-    </section>
-
-    <footer>
-        <div class="caixa-texto-usuario">
-            <input type="text" placeholder="Escreva aqui...">
-            <div class="encaminhado">enviado para usuario</div>
-        </div>
-        <ion-icon id="send-button" onclick="sendMsg(this)" name="paper-plane-outline" data-identifier="send-message">
-        </ion-icon>
-
-    </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>

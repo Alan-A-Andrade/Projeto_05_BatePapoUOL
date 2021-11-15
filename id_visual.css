@@ -1,9 +1,5 @@
-html {
-    box-sizing: border-box;
-}
-
 *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -12,300 +8,200 @@ html {
     display: none;
 }
   
+
 body{
-    width: 100%;
-    height: 667px;
-
-    background: #F3F3F3;
-
-    font-family:'Roboto';
-    size: 14px;
-    line-height: 16.41px;
-}
-
-.tela-login{
     width: 100%;
     height: 100%;
 
+    background-color: #F3F3F3;
 
-    padding: 72px 10px;
+    font-family: 'Roboto';
+    font-size: 14px;
+}
+
+strong{
+    font-weight: bold;
+}
+
+.logIn-Screen{
+    width: 100%;
+    height: 100%;
+
     background-color: #FFFFFF;
-    
-    position: fixed;
-    top: 0px;
-    z-index: 10;
 
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: center;
+    gap: 15px;
 
-}
-
-.tela-login img{
-    height: 92px;
-    margin-bottom: 94px;
     font-size: 18px;
+    line-height: 25px;
+
+    padding: 72px 0px;
+
+    position: fixed;
+    z-index: 10;
+  
 }
 
-.tela-login input{
-    width: 260px;
-    height: 54px;
+.logIn-Screen img{
+    width: 130px;
+    padding-bottom: 70px;
+    }
 
-    color: #AEAEAE;
-    font-weight: 400;
-    line-height: 25px;
+.logIn-Screen input{
+    width: 261px;
+    height: 54px;
 
     border: 1px solid #D7D7D7;
     border-radius: 4px;
 
-    margin: 15px;
-  
-    font-style: normal;
     text-align: center;
-   
+    font-size: inherit;
+    line-height: inherit;
+    
 }
 
-.tela-login input ::placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #AEAEAE;
-    opacity: 1; /* Firefox */
-    font-style: normal;
-    font-weight: 400;
-    line-height: 25px;
-  }
-  
-
-.tela-login button{
+.logIn-Screen button{
     width: 109px;
     height: 45px;
+
+    background: #E7E7E7;
 
     border: none;
     border-radius: 9px;
 
-    background: #E7E7E7;
-
-    font-size: 18px;
-    color: #696969; 
-}
-
-.menu{
-width: 100%;
-height: 100%;
-
-position: fixed;
-top: 0px;
-z-index: 20;
-
-display: flex;
-flex-wrap: wrap;
-}
-
-.opcoes{
-    width: 260px;
-    height: 100%;
-    
-    background: #FFFFFF;
-
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    z-index: 25;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.opcoes nav{
-    width: 100%;
-}
-
-.user-list{
-    max-height: 60vh;
-    overflow: scroll;
-}
-
-.opcoes li{
-    width: 100%;
-}
-
-.icon-name{
-    width: 100%;
-    height: 30px;
-
-    padding: 0px 10px;
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.icon-name h1{
-    width: 60%;
-    text-align: start;
-    font-size: 16px;
-
+    font-size: inherit;
+    line-height: inherit;
+    color: #696969;
 }
 
 
-.icon-name ion-icon{
-    padding: 5px;
-
-    font-size: 25px;
-}
-
-ion-icon[name="checkmark"]{
-color: #28BB25;
-position: absolute;
-right: 0px;
-
-}
-
-.texto-menu{
-text-align: center;
-font-size: 16px;
-font-weight: 700;
-
-padding: 32px;
-
-}
 
 
-ul, li{
-    list-style-type: none;
-    display: flex;
-}
-
-.fundo{
+.chat-Screen{
     width: 100%;
     height: 100%;
 
-    
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #E5E5E5;
 }
-
-
 
 
 header{
     width: 100%;
     height: 80px;
+    
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+
+    padding: 0px 25px;
+
     position: fixed;
     top: 0px;
 
-    padding: 0px 22px;
-
-    background: #FFFFFF;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
-
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
 
-strong{
-font-weight: bolder;
-}
-
-.logo{
-    height: 53px;
+header img{
+    width: 75px;
+    object-fit: contain;
 }
 
 header ion-icon{
     font-size: 45px;
 }
 
+
 footer{
     width: 100%;
     height: 80px;
+    
+    background-color: #FFFFFF;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    
+
+    padding: 15px 18px 10px 18px;
 
     position: fixed;
     bottom: 0px;
 
-    padding: 15px 17px;
-    
-    background: #FFFFFF;
-    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.User-SendBox{
+    max-width: 90%;
+    height: 100%;
 
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
+    flex-wrap: wrap; 
+}
+
+.User-SendBox input{
+    width: 100%;
+    font-size: 18px;
+
+}
+
+.User-SendBox input::placeholder{
+    width: 100%;
+    font-size: 18px;
+    color: black;
+    font-style: italic;
+}
+
+.User-SendBox div{
+
+    height: 1em;
+
+    color: #696969;
+
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
 }
 
 footer ion-icon{
     font-size: 30px;
-    padding: 5px;
 }
 
-.caixa-texto-usuario{
-    width: 100%;
+.container{
+    padding: 100px 0px;
+    height: 100%;
+
+    background-color: #F3F3F3;
+}
+
+.container ul{
     display: flex;
     flex-direction: column;
+    gap: 5px;
+    
 }
 
-footer input{
-border: none;
-
-font-size: 18px;
-font-weight: 400;
-line-height: 25px;
-}
-
-footer input ::placeholder, ::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color:black;
-    opacity: 1; /* Firefox */
-    font-style: italic;
-    font-weight: 400;
-    line-height: 21.09px;
-  }
-
-
-.encaminhado{
-    color: gray;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 25px;
-}
-
-
-section{
-    padding: 80px 0px;
-    margin-top: 26px;
+.container ul li{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-}
-
-ul{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-}
-
-
-.caixa-mensagem{
     min-height: 40px;
-    width: 100%;
 
-    border-radius: 2px;
+    padding: 1em 1em;
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-}
 
-.caixa-mensagem h1{
-    width: 100%;
-
-    padding: 12px 8px;
-
-    overflow-wrap: break-word;
+    overflow: hidden;
+    
 }
 
 .status{
-    background: #DCDCDC;
+   background: #DCDCDC;
+
 }
 
 .message{
@@ -317,20 +213,146 @@ ul{
 
 }
 
+.container p{
+
+line-height: 17px;
+word-break: break-word;
+vertical-align: text-top;
+}
+
+user-text{
+    display: inline-block;
+    font-weight: bold;
+    max-width: 16ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: inherit;
+}
+
+time-text{
+    color: #696969;  
+    vertical-align: inherit;
+  
+}
+
+.chat-options{
+width: 100%;
+height: 100%;
+
+display: flex;
+flex-direction: row-reverse;
+
+position: fixed;
+top: 0px;
+right: -100vw;
+z-index: -1;
+
+transition: all 0.5s ease-in-out;
+}
+
+.chat-options-show{
+right: 0vw;
+z-index: 5;
+
+transition: all 0.5s ease-in-out;
+}
+
+.background-options{
+width: 100%;
+height: 100%;
+position: fixed;
+right:0px;
+
+background-color: rgba(1, 0, 0);
+opacity: 0.0;
+
+transition: all 0.5s ease-in-out;
+
+}
+
+.background-options-show{ 
+opacity: 0.6;
+transition: all 0.5s ease-in-out;
+}
+
+.options-menu{
+    max-width: 260px;
+    height: 100%;
+    
+    background-color: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+
+    z-index: 10;
+
+    font-size: 16px;
+}
+
+.options-menu > h1{
+
+    width: inherit;
+
+    padding: 20px 45px;
+
+    text-align: center;
+    font-weight: bold;
+}
+
+.user-list{
+    max-height: 60vh;
+
+    overflow: scroll;
+}
+
+.options-menu li{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    padding: 0px 10px;
+}
+
+.icon-name{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.icon-name h1{
+    height: 1em;
+    width: 160px;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.options-menu ion-icon{
+    padding: 5px;
+    font-size: 25px;
+}
+
+ion-icon[name="checkmark"]{
+    color: #28BB25;
+    font-size: 15px;
+    --ionicon-stroke-width: 120px;
+}
+
+
+disconnected, .disconnected h1, .disconnected ion-icon{
+    text-decoration: line-through;
+    opacity: 0.5;
+    color: #696969;
+}
+
 .hidden{
     display: none;
 }
 
 
-.teste{
-background-color: grey;
-display: flex;
-flex-direction: column;
-position: fixed;
-top: 50%;
-right: 0px;
-}
 
-.teste button{
-font-size: 8px;
-}
+
