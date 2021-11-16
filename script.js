@@ -30,7 +30,7 @@ function askToLogIn() {
 
     let userNameInput = document.querySelector(".logIn-Screen input")
 
-    promiseLogIn = axios.post("https://mock-api.driven.com.br/api/v4/uol/participants", { name: userNameInput.value });
+    promiseLogIn = axios.post(dataUsersOnlineUrl, { name: userNameInput.value });
 
     document.querySelector(".loading-gif").classList.toggle("hidden")
     document.querySelector(".logIn-Screen h1").classList.toggle("hidden")
@@ -241,7 +241,9 @@ function selectUserTo(SelectedRecipient) {
         previusRecipient = SelectedRecipient;
     }
 
-    sendModeSet("", "blank")
+    sendModeSet("", "blank");
+
+    getDataUsersOnline(dataUsersOnlineUrl);
 }
 
 function selectVisibilityMode(element) {
